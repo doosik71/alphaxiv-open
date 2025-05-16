@@ -15,6 +15,124 @@ An open-source implementation of AlphaXIV that allows users to chat with arXiv p
 - Chat with papers using Google's Gemini API
 - Support for larger document context lengths
 
+## How It Works
+
+AlphaXIV combines several powerful technologies to enable intelligent conversations with academic papers. Here's how it works behind the scenes:
+
+### Document Processing Flow
+
+When a user submits an arXiv paper URL, the system processes it through the following steps:
+
+```mermaid
+graph TD
+    %% Document Processing Flow
+    A[User inputs arXiv URL] --> B[Download PDF from arXiv]
+    B --> C[Convert PDF to Markdown using Markitdown]
+    C --> D[Process and clean Markdown content]
+    D --> E[Split content into chunks]
+
+    %% MiniRAG Heterogeneous Graph Indexing
+    E --> F1[Extract named entities from chunks]
+    E --> F2[Generate embeddings with OpenAI]
+    F1 --> G1[Create entity nodes]
+    F2 --> G2[Create text chunk nodes]
+    G1 --> G3[Build entity-entity connections]
+    G1 --> G4[Build entity-chunk connections]
+    G2 --> G4
+    G3 & G4 --> G5[Generate semantic descriptions for edges]
+    G5 --> G6[Construct semantic-aware heterogeneous graph]
+
+    subgraph "PDF Processing"
+    B
+    C
+    D
+    E
+    end
+
+    subgraph "Heterogeneous Graph Indexing"
+    F1
+    F2
+    G1
+    G2
+    G3
+    G4
+    G5
+    G6
+    end
+
+    class B,C,D,E processing;
+    class F1,F2,G1,G2,G3,G4,G5,G6 indexing;
+```
+
+### Question Answering Flow
+
+When a user asks a question about a paper, the system processes it through these steps:
+
+```mermaid
+graph TD
+    %% Query Processing
+    H[User asks question] --> I1[Extract entities from query]
+    I1 --> I2[Predict potential answer types]
+    I1 & I2 --> I3[Map query to graph entities]
+
+    %% Graph-Based Knowledge Retrieval
+    I3 --> J1[Identify starting nodes via semantic matching]
+    J1 --> J2[Discover answer-aware entity nodes]
+    J1 & J2 --> J3[Apply topology-enhanced graph retrieval]
+    J3 --> J4[Score and rank reasoning paths]
+    J4 --> J5[Retrieve connected text chunks]
+
+    %% Response Generation
+    J5 --> K[Combine query + retrieved context]
+    K --> L[Send to Gemini API]
+    L --> M[Return response to user]
+
+    subgraph "Query Semantic Mapping"
+    I1
+    I2
+    I3
+    end
+
+    subgraph "Topology-Enhanced Retrieval"
+    J1
+    J2
+    J3
+    J4
+    J5
+    end
+
+    subgraph "Response Generation"
+    K
+    L
+    M
+    end
+
+    class I1,I2,I3 mapping;
+    class J1,J2,J3,J4,J5 retrieval;
+    class K,L,M generation;
+```
+
+The system operates in five sophisticated phases:
+
+1. **PDF Processing**: When you submit an arXiv URL, AlphaXIV downloads the PDF, converts it to Markdown using Microsoft's Markitdown tool, cleans the content, and splits it into manageable chunks.
+
+2. **Heterogeneous Graph Indexing**: MiniRAG creates a semantic-aware knowledge graph with two types of nodes:
+   - Entity nodes extracted from the text (concepts, terms, equations)
+   - Text chunk nodes containing the original content
+
+   The system then builds connections between these nodes (entity-entity and entity-chunk) and generates semantic descriptions for each edge, creating a rich graph structure that captures the paper's knowledge.
+
+3. **Query Semantic Mapping**: When you ask a question, the system extracts entities from your query, predicts potential answer types, and maps these to the graph entities, creating an efficient bridge between your question and the knowledge graph.
+
+4. **Topology-Enhanced Retrieval**: Unlike traditional vector-based retrieval, MiniRAG uses a sophisticated graph traversal approach:
+   - Identifies starting nodes through semantic matching
+   - Discovers potential answer nodes based on predicted types
+   - Applies topology-enhanced graph retrieval to find meaningful reasoning paths
+   - Scores and ranks these paths based on relevance and structural importance
+   - Retrieves the connected text chunks that contain the most relevant information
+
+5. **Response Generation**: The retrieved context chunks are combined with your query and sent to Google's Gemini API, which generates a comprehensive response that leverages both the semantic content and the structural relationships captured in the graph.
+
 ## Prerequisites
 
 - Python 3.9+
