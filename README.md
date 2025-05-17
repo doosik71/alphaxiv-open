@@ -1,6 +1,12 @@
 # AlphaXIV-Open
 
+![AlphaXIV Frontend](alphaxiv-open-frontend.png)
+
 My own open-source implementation of AlphaXIV that allows users to chat with arXiv papers. This project uses FastAPI for the backend, markitdown for PDF conversion, MiniRAG for indexing, and Google's Gemini API for chat completions.
+
+## Demo
+
+![Demo Video](alphaxiv-open-demo.mp4)
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/sheing)
 [![Tip in Crypto](https://tip.md/badge.svg)](https://tip.md/sng-asyncfunc)

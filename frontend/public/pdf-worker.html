@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF.js Worker</title>
+  <script>
+    // This file serves the PDF.js worker with the correct MIME type
+    // It's used as a fallback if the direct worker file doesn't load correctly
+    
+    // Fetch the worker file
+    fetch('/pdf.worker.min.js')
+      .then(response => response.text())
+      .then(workerCode => {
+        // Create a blob with the worker code and the correct MIME type
+        const blob = new Blob([workerCode], { type: 'application/javascript' });
+        
+        // Create a URL for the blob
+        const workerUrl = URL.createObjectURL(blob);
+        
+        // Pass the URL back to the parent window if this is loaded in an iframe
+        if (window.parent !== window) {
+          window.parent.postMessage({ workerUrl }, '*');
+        }
+      })
+      .catch(error => {
+        console.error('Error loading PDF.js worker:', error);
+      });
+  </script>
+</head>
+<body>
+  <p>PDF.js Worker Loader</p>
+</body>
+</html>
