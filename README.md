@@ -6,11 +6,7 @@ My own open-source implementation of AlphaXIV that allows users to chat with arX
 
 ## Demo
 
-
-
 https://github.com/user-attachments/assets/e8eae8af-ad38-4e70-913e-60022157784b
-
-
 
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/sheing)
@@ -133,6 +129,8 @@ The system operates in five sophisticated phases:
 
    The system then builds connections between these nodes (entity-entity and entity-chunk) and generates semantic descriptions for each edge, creating a rich graph structure that captures the paper's knowledge.
 
+   ![AlphaXIV Knowledge Graph](screenshot/alphaxiv-kg.png)
+
 3. **Query Semantic Mapping**: When you ask a question, the system extracts entities from your query, predicts potential answer types, and maps these to the graph entities, creating an efficient bridge between your question and the knowledge graph.
 
 4. **Topology-Enhanced Retrieval**: Unlike traditional vector-based retrieval, MiniRAG uses a sophisticated graph traversal approach:
@@ -167,8 +165,8 @@ The system operates in five sophisticated phases:
 
 [MiniRAG](https://github.com/HKUDS/minirag) (distributed as LightRAG) is a lightweight, efficient Retrieval Augmented Generation system designed for simplicity and performance, based on the research paper ["MiniRAG: Towards Extremely Simple Retrieval-Augmented Generation"](https://arxiv.org/abs/2501.06713). We chose MiniRAG because:
 
-- **Graph-based indexing**: Unlike traditional vector-based RAG systems, MiniRAG employs a graph-based approach that captures the relationships between document chunks, creating a more semantically rich representation of academic papers
-- **Superior semantic understanding**: The graph structure preserves the hierarchical nature of academic papers (sections, subsections, references), enabling more contextually relevant retrievals
+- **Graph-based indexing**: Unlike traditional vector-based RAG systems, MiniRAG employs a graph-based approach that captures the relationships between document chunks, creating a more semantically rich representation of academic papers (see the knowledge graph visualization above)
+- **Superior semantic understanding**: The graph structure preserves the hierarchical nature of academic papers (sections, subsections, references), enabling more contextually relevant retrievals and a deeper understanding of complex academic content
 - **Enhanced retrieval accuracy**: By considering both semantic similarity and structural relationships, MiniRAG can retrieve more accurate context for complex scientific queries
 - **Optimized for smaller models**: Works efficiently with smaller, free language models while maintaining high performance
 - **Flexible embedding options**: Supports various embedding models including OpenAI's text-embedding models
