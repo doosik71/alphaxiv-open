@@ -6,7 +6,12 @@ My own open-source implementation of AlphaXIV that allows users to chat with arX
 
 ## Demo
 
-![Demo Video](screenshot/alphaxiv-open-demo.mp4)
+
+
+https://github.com/user-attachments/assets/e8eae8af-ad38-4e70-913e-60022157784b
+
+
+
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/sheing)
 [![Tip in Crypto](https://tip.md/badge.svg)](https://tip.md/sng-asyncfunc)
