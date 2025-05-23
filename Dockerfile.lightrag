@@ -1,0 +1,24 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY start_minirag.py .
+COPY .env.example ./.env
+
+# Create necessary directories
+RUN mkdir -p data/storage data/inputs
+
+# Set environment variables
+ENV MINIRAG_HOST=0.0.0.0
+ENV MINIRAG_PORT=9721
+
+# Expose the LightRAG port
+EXPOSE 9721
+
+# Start the LightRAG server
+CMD ["python", "start_minirag.py"]
