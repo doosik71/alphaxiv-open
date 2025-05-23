@@ -1,0 +1,24 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY app/ ./app/
+COPY .env.example ./.env
+
+# Create necessary directories
+RUN mkdir -p data/papers data/index data/storage
+
+# Set environment variables
+ENV HOST=0.0.0.0
+ENV PORT=8000
+
+# Expose the API port
+EXPOSE 8000
+
+# Start the FastAPI server
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  lightrag:
+    build:
+      context: .
+      dockerfile: Dockerfile.lightrag
+    ports:
+      - "9721:9721"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MINIRAG_HOST=0.0.0.0
+      - MINIRAG_PORT=9721
+      - MINIRAG_EMBEDDING_BINDING=openai
+      - MINIRAG_EMBEDDING_MODEL=text-embedding-3-small
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9721/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_MODEL=gemini-2.0-flash-001
+      - MINIRAG_HOST=lightrag
+      - MINIRAG_PORT=9721
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      lightrag:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - api
