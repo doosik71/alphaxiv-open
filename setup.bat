@@ -38,7 +38,7 @@ uv pip install -r requirements.txt
 REM Install MiniRAG if requested
 if "%INSTALL_MINIRAG%"=="true" (
     echo Installing MiniRAG...
-    pip install lightrag-hku[api]
+    uv pip install lightrag-hku[api]
     echo MiniRAG installed.
 )
 
