@@ -1,0 +1,17 @@
+[project]
+name = "AlphaXIV-Open"
+version = "0.1.0"
+description = "My own open-source implementation of AlphaXIV that allows users to chat with arXiv papers. This project uses FastAPI for the backend, markitdown for PDF conversion, MiniRAG for indexing, and Google's Gemini API for chat completions."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pydantic",
+  "python-multipart",
+  "httpx",
+  "markitdown",
+  "lightrag-hku[api]",
+  "google-generativeai",
+  "python-dotenv"
+]
